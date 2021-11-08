@@ -1,9 +1,11 @@
 body {
     width: 1080px;
-    margin: 0 10px 0 10px;
+    margin: 0;
+    align-self: center;
+    justify-self: center;
 }
 
-#slidebar {
+#sidebar {
     background-color: gray;
     font-size: 0.9em;
     padding: 10px;
@@ -21,25 +23,25 @@ body {
 }
 
 input[type="text"] {
-    border: gray;
+    border: 1px solid gray;
     border-radius: 0.375em;
     height: 2.5em;
     padding: 1em 0;
     margin: 5px;
-    outline: none;
 }
 
 input[type="text"]:focus {
-    border-color: red;
+    border: 1px solid red;
+    outline: none;
 }
 
 li {
-    color: green;
+    list-style-type: disc;
 }
 
 header {
     color: blue;
-    font-family: "Roboto Slab serif";
+    font-family: "Roboto Slab", sans-serif;
     font-size: 50px;
     margin: 0 0 1em 0;
 }
@@ -49,6 +51,37 @@ header {
     flex-direction: row-reverse;
 }
 
-span:not(.extra > span){
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+
+span:not(.extra){
     color: red;
 }
+
+#sidebar > .inner {
+    padding: 2.2em, 2.2em, 2.2em, 2.4em;
+    width: 23em;
+}
+
+a {
+    color: darkblue;
+}
+
+a:hover {
+    color: blue;
+}
+
+a:visited {
+    color: darkmagenta;
+}
+
+a:visited:hover {
+    color: magenta
+}
+
+ #sidebar > .inner > * {
+    border-bottom: 5px solid greenyellow;
+} 
