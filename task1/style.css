@@ -1,0 +1,64 @@
+body {
+    font-family: sans-serif;
+    padding: 10px;
+    background-color: rgb(181, 181, 181);
+}
+
+#wrapper {
+    display: flex;
+    flex-direction: row;
+    background-color: lightgray;
+    margin-top: 20px;
+}
+
+#left {
+    flex: 1;
+    padding: 10px;
+    border-right: 1px solid teal;
+}
+
+#right {
+    flex: 5;
+    padding: 10px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+h1 {
+    color: white;
+    background-color: teal;
+    padding: 10px;
+    margin: 0;
+}
+
+.backgroundText {
+    line-height: 0px;
+    position: absolute;
+    font-size: 140px;
+    font-style: italic;
+    color: orange;
+    opacity: 0.5;
+}
+
+tbody tr:first-child {
+    background-color: teal;
+    color: white;
+}
+
+table {
+    align-self: center;
+    border-spacing:0;
+}
+
+td{
+    border-left: 1px solid teal;
+    border-bottom: 1px solid teal;
+  }
+  td:last-child {
+    border-right: 1px solid teal;
+  }
+
+ td, th {   
+    padding: 8px;
+  }
