@@ -1,0 +1,54 @@
+body {
+    width: 1080px;
+    margin: 0 10px 0 10px;
+}
+
+#slidebar {
+    background-color: gray;
+    font-size: 0.9em;
+    padding: 10px;
+    width: 36%;
+}
+
+#main {
+    width: 62%;
+    padding: 10px;
+}
+
+#main-content {
+    display: flex;
+    flex-direction: row;
+}
+
+input[type="text"] {
+    border: gray;
+    border-radius: 0.375em;
+    height: 2.5em;
+    padding: 1em 0;
+    margin: 5px;
+    outline: none;
+}
+
+input[type="text"]:focus {
+    border-color: red;
+}
+
+li {
+    color: green;
+}
+
+header {
+    color: blue;
+    font-family: "Roboto Slab serif";
+    font-size: 50px;
+    margin: 0 0 1em 0;
+}
+
+#banner {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+span:not(.extra > span){
+    color: red;
+}
