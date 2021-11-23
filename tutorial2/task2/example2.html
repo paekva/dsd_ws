@@ -44,12 +44,30 @@
             var changeCounter = 0;     // ???
 
             function setField(element) {
-                element.style.backgroundColor = currentFillColor;
+                const lastColor = element.style.backgroundColor;
+
+                element.style.backgroundColor = compareStrings(lastColor, currentFillColor) === 0
+                    ? '' : currentFillColor;
+
+                changeCounter++;
+
+                if(changeCounter == 10) alert('You have clicked 10 times on the field!');
             }
 
             function setFillColor(color) {
                 currentFillColor = color;
+
+                log.appendChild(getNewLogElement());
             }
+
+            const getNewLogElement = () => {
+                const log = document.getElementById('Log');
+                const newNode = document.createElement('div');
+                newNode.style.color = currentFillColor;
+                newNode.innerText = 'Color changed';
+            }
+
+            const compareStrings = (a, b) => a < b ? -1 : ( a > b ? 1 : 0);
         </script>
     </head>
     <body>
