@@ -12,16 +12,17 @@ let results;
 const magicNumber = 2021;
 
 for(var k=0; k<numbers.length; k++) {
-    if(numbers[k] > magicNumber) continue;
+    var rest = magicNumber - numbers[k];
+    if(rest <= 0) continue;
     
-    for(var i = k+1; i < numbers.length; i++) {
-        if(numbers[k] + numbers[i] === magicNumber) {
-            results = numbers[k] * numbers[i];
+    var ind = numbers.findIndex((v) => v == rest);
 
-            console.warn(numbers[k] + ' ' + numbers[i] + ' ' +  results)
+    if(ind != null && ind != k && ((numbers[k] + numbers[ind]) == magicNumber)){
+        results = numbers[k] * numbers[ind];
 
-            break;
-        }
+        console.warn(numbers[k] + ' ' + numbers[ind] + ' ' +  results)
+
+        break;
     }
 
     if(results) break;
