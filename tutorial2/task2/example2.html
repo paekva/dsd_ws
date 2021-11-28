@@ -57,14 +57,15 @@
             function setFillColor(color) {
                 currentFillColor = color;
 
+                const log = document.getElementById('Log');
                 log.appendChild(getNewLogElement());
             }
 
             const getNewLogElement = () => {
-                const log = document.getElementById('Log');
                 const newNode = document.createElement('div');
                 newNode.style.color = currentFillColor;
                 newNode.innerText = 'Color changed';
+                return newNode;
             }
 
             const compareStrings = (a, b) => a < b ? -1 : ( a > b ? 1 : 0);

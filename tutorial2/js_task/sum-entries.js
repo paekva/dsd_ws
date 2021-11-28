@@ -24,6 +24,4 @@ for(var k=0; k<numbers.length; k++) {
 
         break;
     }
-
-    if(results) break;
 };
