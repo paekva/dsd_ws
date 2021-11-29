@@ -34,6 +34,10 @@
 		.figure {
 			font-size: 50px;
 		}
+
+		.light {
+			color: gold;
+		}
 	</style>
 </head>
 <body>
@@ -66,12 +70,12 @@
 			const figureEL = document.createElement("span");
 			figureEL.innerHTML = figureData['display'];
 			figureEL.id = figureData['field'];
-			figureEL.className = 'figure ' + figureName;
+			figureEL.className = 'figure ' + figureName + (currentField == figureData['field'] ? ' light' : '');
 
 			document.getElementById(figureData['field']).appendChild(figureEL);
 		}
 
-		const updateFigures = (figureName, figureData) => {
+		const updateFigure = (figureName, figureData) => {
 			const element = document.getElementsByClassName(figureName);
 			console.warn (element[0].id + ' ' + figureData['field']);
 			element[0].remove();
@@ -94,9 +98,9 @@
 
 		const onFieldClick = (ev) => {
 			const fieldCoords = ev.target.id;
-			const isFigureOnTile = Object.values(figures).map((e) => e['field']).includes(fieldCoords);
+			const figureOnNewTile = Object.entries(figures).find((e) => e[1]['field'] === fieldCoords);
 
-			if(currentField != '' && !isFigureOnTile) {
+			if(currentField != '' && !figureOnNewTile) {
 				const figureOnTile = Object.entries(figures)
 					.find((e) => e[1]['field'] === currentField);
 
@@ -106,7 +110,7 @@
 						'field': fieldCoords,
 					}
 
-					updateFigures(figureOnTile[0], figures[figureOnTile[0]]);
+					updateFigure(figureOnTile[0], figures[figureOnTile[0]]);
 				} else {
 					currentField = fieldCoords;
 				}
@@ -114,6 +118,10 @@
 
 			} else {
 				currentField = fieldCoords;
+
+				if(figureOnNewTile) {
+					updateFigure(figureOnNewTile[0], figures[figureOnNewTile[0]]);
+				}
 			}
 
 		}
