@@ -1,0 +1,124 @@
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<style>
+		table {
+			border-spacing: 0;
+			margin: 0;
+			padding: 0;
+			
+			border-right: 1px solid black;
+			border-bottom: 1px solid black;
+		}
+		
+		.tile {
+			border-top: 1px solid black;
+			border-left: 1px solid black;
+			width: 70px;
+			height: 70px;
+			margin: 0;
+		}
+
+		tr:nth-child(2n), td:nth-child(2n)  {
+			background-color: gray;
+		}
+
+		tr:nth-child(2n) td:nth-child(2n) {
+			background-color: white;
+		}
+
+		td {
+			text-align: center;
+		}
+
+		.figure {
+			font-size: 50px;
+		}
+	</style>
+</head>
+<body>
+
+	<table>
+		<tbody id="chessboard"></tbody>
+	</table>
+
+	<script>
+		let currentFigure = '';
+		let currentField = '';
+
+		/// figures
+		const figures = {
+			'bishop': {
+				display: '&#9815;',
+				field: '1_3'
+			},
+			'tower': { 
+				display: '&#9814;',
+				field: '1_1'
+			},
+			'knight': {
+				display: '&#9816;',
+				field: '1_2',
+			},
+		}
+
+		const checkIsPossibleForBishop = (navigateTo) => {
+			const navigation = navigateTo.split('_');
+
+
+		}
+
+		const checkIsPossibleForTower = (navigateTo) => {
+			const from = currentField.split('_');
+			const to = navigateTo.split('_');
+
+			return from[0] === to[0] || from[1] === to[1];
+		}
+
+		const onFieldClick = (ev) => {
+			const fieldCoords = ev.target.id;
+			const isFigureOnTile = Object.values(figures).map((e) => e['field']).includes(fieldCoords);
+			console.warn(fieldCoords);
+			console.warn(Object.values(figures).map((e) => e['field']));
+
+			if(currentField != '' && !isFigureOnTile) {
+				
+			} else {
+				currentField = fieldCoords;
+			}
+
+		}
+
+		/// chessboard setup
+		const boardSize = 8;
+		const array = Array.apply(0, Array(boardSize));
+		const chessboard = document.getElementById("chessboard");
+
+		array.forEach((_, oi) => {
+			const horizontal = document.createElement("tr");
+			
+			array.forEach((_, ii) => {
+				const tile = document.createElement("td");
+				tile.className = 'tile';
+				tile.id = (oi + 1) + '_' + (ii + 1);
+				tile.addEventListener('click', onFieldClick);
+				horizontal.appendChild(tile);
+			});
+
+			chessboard.appendChild(horizontal);
+		})
+
+		Object.values(figures).forEach((el) => {
+			const figure = document.createElement("span");
+			figure.innerHTML = el['display'];
+			figure.id = el['field'];
+			figure.className = 'figure';
+
+			document.getElementById(el['field']).appendChild(figure);
+		});
+
+		
+	</script>
+
+</body>
+</html>
