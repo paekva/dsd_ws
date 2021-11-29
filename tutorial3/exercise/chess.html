@@ -47,7 +47,6 @@
 	</table>
 
 	<script>
-		let currentFigure = '';
 		let currentField = '';
 
 		/// figures
@@ -84,9 +83,10 @@
 		}
 
 		const checkIsPossibleForBishop = (navigateTo) => {
-			const navigation = navigateTo.split('_');
+			const from = currentField.split('_');
+			const to = navigateTo.split('_');
 
-
+			return Math.abs(from[0] - to[0]) == Math.abs(from[1] - to[1]);
 		}
 
 		const checkIsPossibleForTower = (navigateTo) => {
@@ -94,6 +94,14 @@
 			const to = navigateTo.split('_');
 
 			return from[0] === to[0] || from[1] === to[1];
+		}
+
+		const checkIsPossibleForKnight = (navigateTo) => {
+			const from = currentField.split('_');
+			const to = navigateTo.split('_');
+
+			return (Math.abs(from[0] - to[0]) == 1 && Math.abs(from[1] - to[1]) == 2) 
+			|| (Math.abs(from[0] - to[0]) == 2 && Math.abs(from[1] - to[1]) == 1);
 		}
 
 		const onFieldClick = (ev) => {
@@ -105,12 +113,35 @@
 					.find((e) => e[1]['field'] === currentField);
 
 				if(figureOnTile) {
-					figures[figureOnTile[0]] = {
-						'display': figureOnTile[1]['display'],
-						'field': fieldCoords,
+					/// figure is selected and is intended to be moved
+					let result = false;
+					switch(figureOnTile[0]) {
+						case 'bishop':{
+							result = checkIsPossibleForBishop(fieldCoords);
+							break;
+						}
+						case 'knight':{
+							result = checkIsPossibleForKnight(fieldCoords);
+							break;
+						}
+						case 'tower':{
+							result = checkIsPossibleForTower(fieldCoords);
+							break;
+						}
+						default:
+							result = false;
 					}
 
-					updateFigure(figureOnTile[0], figures[figureOnTile[0]]);
+					if(result) {
+						figures[figureOnTile[0]] = {
+						'display': figureOnTile[1]['display'],
+						'field': fieldCoords,
+						}
+
+						updateFigure(figureOnTile[0], figures[figureOnTile[0]]);
+					} else {
+						alert ('This move is not allowed for: ' + figureOnTile[0]);
+					}
 				} else {
 					currentField = fieldCoords;
 				}
