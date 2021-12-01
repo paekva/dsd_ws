@@ -49,7 +49,6 @@
 	<script>
 		let currentField = '';
 
-		/// figures
 		const figures = {
 			'bishop': {
 				display: '&#9815;',
@@ -74,29 +73,29 @@
 			document.getElementById(figureData['field']).appendChild(figureEL);
 		}
 
+		/// deletes prev element and adds new one
 		const updateFigure = (figureName, figureData) => {
 			const element = document.getElementsByClassName(figureName);
-			console.warn (element[0].id + ' ' + figureData['field']);
 			element[0].remove();
 
 			drawFigure(figureName, figureData);
 		}
 
-		const checkIsPossibleForBishop = (navigateTo) => {
+		const isPossibleForBishop = (navigateTo) => {
 			const from = currentField.split('_');
 			const to = navigateTo.split('_');
 
 			return Math.abs(from[0] - to[0]) == Math.abs(from[1] - to[1]);
 		}
 
-		const checkIsPossibleForTower = (navigateTo) => {
+		const isPossibleForTower = (navigateTo) => {
 			const from = currentField.split('_');
 			const to = navigateTo.split('_');
 
 			return from[0] === to[0] || from[1] === to[1];
 		}
 
-		const checkIsPossibleForKnight = (navigateTo) => {
+		const isPossibleForKnight = (navigateTo) => {
 			const from = currentField.split('_');
 			const to = navigateTo.split('_');
 
@@ -104,60 +103,73 @@
 			|| (Math.abs(from[0] - to[0]) == 2 && Math.abs(from[1] - to[1]) == 1);
 		}
 
+		const isMovePossible = (figureName, fieldCoords) => {
+			switch(figureName) {
+				case 'bishop':
+					return isPossibleForBishop(fieldCoords);
+				case 'knight':
+					return isPossibleForKnight(fieldCoords);
+				case 'tower':
+					return isPossibleForTower(fieldCoords);
+				default:
+					return false;
+			}
+		}
+
+		const clearTileSelection = (figureOnCurrentTile) => {
+			currentField = "";
+			updateFigure(figureOnCurrentTile[0], figures[figureOnCurrentTile[0]]);
+		}
+		
 		const onFieldClick = (ev) => {
 			const fieldCoords = ev.target.id;
 			const figureOnNewTile = Object.entries(figures).find((e) => e[1]['field'] === fieldCoords);
+			const figureOnCurrentTile = Object.entries(figures).find((e) => e[1]['field'] === currentField);
 
-			if(currentField != '' && !figureOnNewTile) {
-				const figureOnTile = Object.entries(figures)
-					.find((e) => e[1]['field'] === currentField);
-
-				if(figureOnTile) {
-					/// figure is selected and is intended to be moved
-					let result = false;
-					switch(figureOnTile[0]) {
-						case 'bishop':{
-							result = checkIsPossibleForBishop(fieldCoords);
-							break;
-						}
-						case 'knight':{
-							result = checkIsPossibleForKnight(fieldCoords);
-							break;
-						}
-						case 'tower':{
-							result = checkIsPossibleForTower(fieldCoords);
-							break;
-						}
-						default:
-							result = false;
-					}
-
-					if(result) {
-						figures[figureOnTile[0]] = {
-						'display': figureOnTile[1]['display'],
-						'field': fieldCoords,
-						}
-
-						updateFigure(figureOnTile[0], figures[figureOnTile[0]]);
-					} else {
-						alert ('This move is not allowed for: ' + figureOnTile[0]);
-					}
-				} else {
-					currentField = fieldCoords;
-				}
-
-
-			} else {
+			/// no figure is currently selected to be moved
+			if(!figureOnCurrentTile) {
 				currentField = fieldCoords;
 
-				if(figureOnNewTile) {
+				if(figureOnNewTile) 
 					updateFigure(figureOnNewTile[0], figures[figureOnNewTile[0]]);
-				}
+
+				return;
+			}
+			
+			/// clicked on the same field
+			if(fieldCoords == currentField) {
+				clearTileSelection(figureOnCurrentTile);
+
+				return;
 			}
 
-		}
+			/// try to move on tile with figure
+			if(figureOnNewTile && figureOnCurrentTile) {
+				alert ('This move is not allowed, as selected tile is already occupied');
+				clearTileSelection(figureOnCurrentTile);
 
-		/// chessboard setup
+				return;
+			}
+
+			/// try to move on empty tile
+			if(!figureOnNewTile && figureOnCurrentTile) { 
+				let result = isMovePossible(figureOnCurrentTile[0], fieldCoords);
+					
+				if(result) {
+					figures[figureOnCurrentTile[0]] = {
+						'display': figureOnCurrentTile[1]['display'],
+						'field': fieldCoords,
+					}
+				} else {
+					alert ('This move is not allowed for ' + figureOnCurrentTile[0]);
+				}
+				
+				clearTileSelection(figureOnCurrentTile);
+				return;
+			}
+		}
+		
+		/// set up board
 		const boardSize = 8;
 		const array = Array.apply(0, Array(boardSize));
 		const chessboard = document.getElementById("chessboard");
@@ -178,7 +190,6 @@
 
 		
 		Object.entries(figures).forEach((el) => drawFigure(el[0], el[1]));
-		
 	</script>
 
 </body>
