@@ -12,48 +12,56 @@ const setAllTilesClickHandler = () => {
   }
 };
 
-const insertNewRow = (oldBody, isOnBottom) => {
-  const body = document.createElement("tbody");
-
-  /// constructing new row
-  let columnsNum = oldBody.children[0].length;
-  const newRow = document.createElement("tr");
-  for (var i = 0; i < columnsNum; i++) {
-    const newTile = document.createElement("td");
-    newRow.appendChild(newTile);
+const insertNewRow = (rowsCount) => {
+  const body = document.getElementsByTagName("tbody")[0];
+  for(let i = 0; i < rowsCount; i++) {
+    const lastNode = body.children[body.children.length - 1];
+    body.appendChild(lastNode.cloneNode(true));
   }
-
-  if (!isOnBottom) body.appendChild(newRow);
-
-  body.append(oldBody.children);
-
-  if (isOnBottom) body.appendChild(newRow);
-
-  oldBody.remove();
-  const table = document.getElementsByTagName("table")[0];
-  table.append(body);
 };
 
-const btn = document.getElementById("mybutton");
-btn.addEventListener("click", (ev) => {
-  const x = parseInt(document.getElementById("field_x").value) - 1;
-  const y = parseInt(document.getElementById("field_y").value) - 1;
+const insertNewCol = (colCount) => {
+  const body = document.getElementsByTagName("tbody")[0];
+
+  for(let r = 0; r < body.children.length; r++){
+    const row = body.children[r];
+    for(let i = 0; i < colCount; i++) {
+      const node = row.children[0];
+      row.appendChild(node.cloneNode(true));
+    }
+  };  
+};
+
+const setValueToTile = () => {
+  const x = parseInt(document.getElementById("field_x").value);
+  const y = parseInt(document.getElementById("field_y").value);
   const css = document.getElementById("css").value;
   const text = document.getElementById("text").value;
 
-  if (!x || !y) return;
+  if (!x || !y || x < 0 || y < 0) return;
 
   const body = document.getElementsByTagName("tbody")[0];
   const tile = body.children[y] ? body.children[y].children[x] : undefined;
 
   if (!tile) {
-    if (y > body.children.length) {
-      insertNewRow(body, true);
+    if (y >= body.children.length) {
+      insertNewRow(y - body.children.length + 1);
     }
+
+    if(x >= body.children[0].children.length) {
+      insertNewCol(x - body.children[0].children.length + 1);
+    }
+
+    setValueToTile();
+
+    return;
   } else {
     tile.innerHTML = text;
     tile.style = css;
   }
-});
+}
+
+const btn = document.getElementById("mybutton");
+btn.addEventListener("click", (ev) => setValueToTile());
 
 setAllTilesClickHandler();
