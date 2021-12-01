@@ -1,22 +1,32 @@
 //insert JavaScript code here
 
-const setAllTilesClickHandler = () => {
+const resetTextAndStyle = (element) => {
+  element.style = "";
+  element.innerHTML = "";
+}
+
+
+const setClickHandlerOnAllTiles = () => {
   const body = document.getElementsByTagName("tbody")[0];
   const tiles = body.getElementsByTagName('tr');
 
   for (let i = 0; i < tiles.length; i++) {
-      tiles[i].addEventListener("click", (ev) => {
-        ev.target.style = "";
-        ev.target.innerHTML = "";
-      });
+      tiles[i].addEventListener("click", (ev) => resetTextAndStyle(ev.target));
   }
 };
 
 const insertNewRow = (rowsCount) => {
   const body = document.getElementsByTagName("tbody")[0];
+
+  /// clone existing row and clean its content
+  const basicNode = body.children[body.children.length - 1].cloneNode(true);
+  for(let j = 0; j < basicNode.children.length; j++) {
+    resetTextAndStyle(basicNode.children[j]);
+  }
+
+  /// duplicate the row as many times as needed
   for(let i = 0; i < rowsCount; i++) {
-    const lastNode = body.children[body.children.length - 1];
-    body.appendChild(lastNode.cloneNode(true));
+    body.appendChild(basicNode.cloneNode(true));
   }
 };
 
@@ -25,9 +35,15 @@ const insertNewCol = (colCount) => {
 
   for(let r = 0; r < body.children.length; r++){
     const row = body.children[r];
+
+    /// clone existing tile and clean its content
+    const basicNode = row.children[0].cloneNode(true);
+    resetTextAndStyle(basicNode);
+
+
+    /// duplicate the tile in the row as many times as needed
     for(let i = 0; i < colCount; i++) {
-      const node = row.children[0];
-      row.appendChild(node.cloneNode(true));
+      row.appendChild(basicNode.cloneNode(true));
     }
   };  
 };
@@ -53,6 +69,7 @@ const setValueToTile = () => {
     }
 
     setValueToTile();
+    setClickHandlerOnAllTiles();
 
     return;
   } else {
@@ -64,4 +81,4 @@ const setValueToTile = () => {
 const btn = document.getElementById("mybutton");
 btn.addEventListener("click", (ev) => setValueToTile());
 
-setAllTilesClickHandler();
+setClickHandlerOnAllTiles();
