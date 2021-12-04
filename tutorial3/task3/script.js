@@ -54,7 +54,10 @@ const setValueToTile = () => {
   const css = document.getElementById("css").value;
   const text = document.getElementById("text").value;
 
-  if (!x || !y || x < 0 || y < 0) return;
+  if (!x || !y || x < 0 || y < 0){
+    alert('You need to fill in both x and y fields with positive integer values');
+    return;
+  }
 
   const body = document.getElementsByTagName("tbody")[0];
   const tile = body.children[y] ? body.children[y].children[x] : undefined;
