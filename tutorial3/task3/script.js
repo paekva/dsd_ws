@@ -54,7 +54,7 @@ const setValueToTile = () => {
   const css = document.getElementById("css").value;
   const text = document.getElementById("text").value;
 
-  if (!x || !y || x < 0 || y < 0){
+  if (!x || !y || x < 0 || y < 0 || !Number.isInteger(x) || !Number.isInteger(y)){
     alert('You need to fill in both x and y fields with positive integer values');
     return;
   }
