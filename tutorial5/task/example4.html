@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<!-- saved from url=(0144)https://bildungsportal.sachsen.de/opal/g/PEEK_VIEW_WRAPPER-%2D32364462083-%2D1632450564633196003-%2D88646027159896_global/tutorial/example4.html -->
+<html lang="de-DE"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+        <style>
+            body {
+                font: 15px normal Arial, sans-serif;
+                color: #000000;
+            }
+            label {
+                width: 5em;
+                display: inline-block;
+            }
+            ul {
+                padding: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Guestbook</h1>
+        <ul>
+            <li><b>TestUser:</b> This is an example entry. <a href="https://bildungsportal.sachsen.de/opal/g/PEEK_VIEW_WRAPPER--32364462083--1632450564633196003--88646027159896_global/tutorial/example4.html#" alt="Delete entry">(X)</a></li>
+            <li><b>TestUser2:</b> This is another example entry. <a href="https://bildungsportal.sachsen.de/opal/g/PEEK_VIEW_WRAPPER--32364462083--1632450564633196003--88646027159896_global/tutorial/example4.html#" alt="Delete entry">(X)</a></li>
+        </ul>
+        <hr>
+        <form method="POST" action="https://vsr.informatik.tu-chemnitz.de/edu/2015/evs/exercises/jsajax/guestbook.php">
+                <label for="name">Name</label> <input id="name" type="text" name="name" placeholder="Name"><br>
+                <label for="text">Text</label> <input id="text" type="text" name="text" placeholder="Text"><br>
+                <button type="submit">Add entry</button>
+        </form>
+    
+        <script>
+            const url = "https://vsr.informatik.tu-chemnitz.de/edu/2015/evs/exercises/jsajax/guestbook.php";
+
+
+            const deleteAnEntry = (e, id) => {
+                e.preventDefault();
+                e.stopPropagation();
+
+                const xhttp = new XMLHttpRequest();
+
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        getAllEntries();
+                    }
+                };
+                xhttp.open("DELETE", url+"?id="+id);
+                xhttp.send();
+            }
+
+            const createNewElement = (element) => {
+                const newGuest = document.createElement("li");
+
+                const guestName = document.createElement("b");
+                guestName.innerText = element['name'] + ':';
+
+                const guestText = document.createElement("i");
+                guestText.innerText = element['text'];
+
+                const deleteLink = document.createElement("a");
+                deleteLink.innerText = '(X)';
+                deleteLink.href="";
+                deleteLink.addEventListener('click', (e) => deleteAnEntry(e, element['id']));
+
+                newGuest.appendChild(guestName);
+                newGuest.appendChild(guestText);
+                newGuest.appendChild(deleteLink);
+
+                return newGuest;
+            }
+
+            const getAllEntries = () => {
+                const xhttp = new XMLHttpRequest();
+
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        const guestsData = JSON.parse(this.responseText);
+
+                        const root = document.getElementsByTagName("ul")[0];
+                        root.innerHTML = "";
+
+                        guestsData.forEach(element => {
+                            root.appendChild(createNewElement(element));
+                        });
+
+                    }
+                };
+                xhttp.open("GET", url);
+                xhttp.send();
+            }
+
+            const addNewEntry = (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+
+                const name = e.target[0].value;
+                const text = e.target[1].value;
+                const xhttp = new XMLHttpRequest();
+
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        getAllEntries();
+                    }
+                };
+                xhttp.open("POST", url);
+                xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhttp.send('name=' + encodeURIComponent(name) + "&text=" + encodeURIComponent(text));
+            }
+
+            const el = document.getElementsByTagName('form')[0];
+            el.addEventListener('submit', addNewEntry);
+            getAllEntries();
+        </script>
+</body></html>
