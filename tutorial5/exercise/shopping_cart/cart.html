@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="de-DE">
+<head>
+    <meta charset="UTF-8" />
+    <style>
+        body {
+            font: 15px normal Arial, sans-serif;
+            color: #000000;
+        }
+        label {
+            width: 5em;
+            display: inline-block;
+        }
+        ul {
+            padding: 0;
+        }
+        form {
+            display: inline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Shopping Cart</h1>
+    <ul>
+    </ul>
+    </form>
+    <hr>
+    <img src="cart.gif">
+    <hr>
+    <form>
+        <label for="name">Name</label> <input id="name" type="text" name="name" placeholder="Name"><br>
+        <label for="amount">Amount</label> <input id="amount" type="number" name="amount" placeholder="Amount"><br>
+        <input type="hidden" name="action" value="add">
+        <button type="submit" onsubmit="onAddItem()">Add entry</button>
+    </form>
+    <script>
+        const onAddItem = () => {
+            const xhttp = new XMLHttpRequest();
+            xhttp.open("POST", "/cart", true);
+            xhttp.send({name: bla, amount: 1});
+        }
+    </script>
+</body>
+</html>
