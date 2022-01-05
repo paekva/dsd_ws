@@ -30,24 +30,33 @@
 		console.log("Host:", host);
 
 		//Open up a WebSocket connection named s 
+		const s = new WebSocket(host);
 
 		s.onopen = function (e) {
-
-		// Log messages that the socket is open
-
+			console.log('socket is opened');
 		};
 
 		s.onclose = function (e) {
-			// Log messages that the socket is closed
+			console.log('socket is closed');
 		};
 
 		s.onmessage = function (e) {
-			// Log the messages form the server to the output
+			const newMessage = document.createElement('div');
+			newMessage.innerText = e['data'];
+			output.append(newMessage)
 		};
 
 		s.onerror = function (e) {
 			console.log("Socket error:", e);
 		};
+
+		form.addEventListener('submit', (ev) => {
+			ev.preventDefault();
+			ev.stopPropagation();
+
+			const data = inputBox.value;
+			s.send(data);
+		})
 	
 	} catch (ex) {
 		console.log("Socket exception:", ex);
