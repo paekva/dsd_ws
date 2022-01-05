@@ -38,9 +38,9 @@ def handle_request(conn):
             values[key] = value
 
     try:
-        kf = open(ACCOUNTFILE, "r")
-        balance = float(kf.read(1024))
-        kf.close()
+        cookies = header['Cookie'].split(';')
+        cookie = next(i for i in cookies if 'balance' in i)
+        balance = float(cookie.split('=')[1])
     except:
         balance = 100
 
@@ -55,11 +55,8 @@ def handle_request(conn):
         balance -= amount
 
         try:
-            kf = open(ACCOUNTFILE, "w")
-            kf.write(f"{balance:5.2f}")
-            kf.close()
-
             conn.send('HTTP/1.1 303 See Other\r\n'.encode())
+            conn.send(f'Set-Cookie: balance={balance:5.2f};\r\n'.encode())
             conn.send('Location: /\r\n\r\n'.encode())
             conn.close()
             return
@@ -71,6 +68,7 @@ def handle_request(conn):
 
     conn.send('HTTP/1.1 200 OK\r\n'.encode())
     conn.send('Connection: close\r\n'.encode())
+    conn.send(f'Set-Cookie: balance={balance:5.2f};\r\n'.encode())
     conn.send('Content-Type: text/html\r\n\r\n'.encode())
 
     conn.send('<html><head><title>Account</title></head>\r\n'.encode())
@@ -88,8 +86,6 @@ def handle_request(conn):
 
 
 if __name__ == '__main__':
-    ACCOUNTFILE = 'account.txt'
-
     TCP_IP = ''
     TCP_PORT = 5001
 
