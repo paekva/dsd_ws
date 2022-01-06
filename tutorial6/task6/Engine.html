@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<!-- saved from url=(0165)https://bildungsportal.sachsen.de/opal/g/PEEK_VIEW_WRAPPER-%2D32364462083-%2D1632450564633196003-%2D88800632029426_global/tutorial_websockets/homework_websocket.html -->
+<html class="dj_webkit dj_chrome dj_contentbox"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+	<style type="text/css">
+		body {
+			font-family: Arial, sans-serif;
+			padding: 10px;
+		}
+		.leftpart {
+			width: 500px;
+			height: 500px;
+			margin: 5px;
+		}
+	</style>
+	<title>Engine</title>
+	<link rel="stylesheet" href="./Engine_files/soria.css">
+	<script>dojoConfig = { async: true, gfxRenderer: "svg,silverlight,vml" }</script>
+	<script type="text/javascript" charset="utf-8" src="./Engine_files/HorizontalSlider.js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/HorizontalRuleLabels.js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/gfx.js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/svg.js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/shape.js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/path.js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/move.js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/Moveable.js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/Mover.js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/manager.js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/focus.js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/typematic.js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/Button.js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/_FormValueWidget.js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/_Container.js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/number.js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/HorizontalRule.js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/matrix.js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/touch.js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/common.js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/autoscroll.js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/registry.js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/main.js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/Stateful.js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/window.js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/a11y.js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/_FormWidget.js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/_FormValueMixin.js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/_ButtonMixin.js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/_Widget.js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/_CssStateMixin.js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/_TemplatedMixin.js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/_FormWidgetMixin.js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/string.js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/regexp.js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/number(1).js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/_WidgetBase.js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/_OnDijitClickMixin.js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/_FocusMixin.js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/uacss.js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/hccss.js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/a11yclick.js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/cache.js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/_AttachMixin.js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/number(2).js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/number(3).js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/Destroyable.js"></script><script type="text/javascript" charset="utf-8" src="./Engine_files/hccss(1).js"></script><script src="./Engine_files/dojo.js"></script>
+	<script>
+		var bewege = null;
+		var changeSpeed = null;
+
+		require(["dojo/dom", "dijit/form/HorizontalSlider", "dijit/form/HorizontalRuleLabels", "dojox/gfx", "dojo/domReady!"],
+
+			function (dom, HorizontalSlider, HorizontalRuleLabels, gfx) {
+				var surface = gfx.createSurface("zeichenflaeche", 300, 500);
+				var surface_size = {width: 500, height: 300};
+
+				var SCHEIBE_RAD = 60;
+				var SCHEIBE_MITTX = 150;
+				var SCHEIBE_MITTY = 320;
+				var SCHEIBE_OFFENW = 150;
+				var PLEUEL_BREITE = 15;
+				var PLEUEL_LANG_KURZ = 0.8 * SCHEIBE_RAD;
+				var PLEUEL_LANG_LANG = 1.5 * SCHEIBE_RAD;
+				var PLEUEL_NETTO = 0.9 * PLEUEL_LANG_LANG;
+				var SPLINT_RAD = 4;
+				var STANGE_BREIT = 15;
+				var STANGE_LANG = 160.0;
+				var STANGE_OVER = 0.06 * STANGE_LANG;
+				var KOLBEN_WIDTH = 20;
+				var KOLBEN_HEIGHT = 70;
+				var KOLBEN_DIST = 0.9 * KOLBEN_HEIGHT
+				var KOLBEN_WIDTH2 = 30;
+				var KOLBEN_WIDTH1 = 20;
+				var KOLBEN_HOCH = 70;
+				var KOLBEN_OVER = 7;
+				var K_RING_DIST = 5;
+				var SPEED_FAC = 0.8;
+
+				var winkel = 0.0;
+				var trans1;
+				var speed = 3;
+
+				var kolben;
+				var scheibe;
+				var stange;
+
+				changeSpeed = function (newspeed) {
+					speed = newspeed * SPEED_FAC;
+				}
+
+				bewege = function() {
+					winkel += speed;
+					var mr = dojox.gfx.matrix.rotateg(winkel);
+					var alpha = -Math.asin(PLEUEL_NETTO / STANGE_LANG * Math.sin(Math.PI * winkel / 180.0));
+					var l = PLEUEL_NETTO * Math.cos(Math.PI * winkel / 180.0) + STANGE_LANG * Math.cos(alpha);
+					var mt = dojox.gfx.matrix.translate(SCHEIBE_MITTX, SCHEIBE_MITTY - l);
+					var mr2 = dojox.gfx.matrix.rotate(alpha);
+					scheibe.setTransform([trans1, mr]);
+					stange.setTransform([mt, mr2]);
+					kolben.setTransform(mt);
+					setTimeout("bewege();", 40);
+				}
+
+				erzeugeElemente = function() {
+					kolben = surface.createPath().setFill("#886622").setStroke({color: "#aa0000", width: 2});
+
+					kolben.moveTo(-KOLBEN_WIDTH2 / 2.0, -KOLBEN_HOCH);
+					kolben.lineTo(KOLBEN_WIDTH2 / 2.0, -KOLBEN_HOCH);
+					kolben.lineTo(KOLBEN_WIDTH2 / 2.0, -KOLBEN_HOCH + 2 * K_RING_DIST);
+					kolben.lineTo(KOLBEN_WIDTH1 / 2.0, -KOLBEN_HOCH + 2 * K_RING_DIST);
+					kolben.lineTo(KOLBEN_WIDTH1 / 2.0, -KOLBEN_HOCH + 3 * K_RING_DIST);
+					kolben.lineTo(KOLBEN_WIDTH2 / 2.0, -KOLBEN_HOCH + 3 * K_RING_DIST);
+					kolben.lineTo(KOLBEN_WIDTH2 / 2.0, -KOLBEN_HOCH + 4 * K_RING_DIST);
+					kolben.lineTo(KOLBEN_WIDTH1 / 2.0, -KOLBEN_HOCH + 4 * K_RING_DIST);
+					kolben.lineTo(KOLBEN_WIDTH1 / 2.0, -KOLBEN_HOCH + 5 * K_RING_DIST);
+					kolben.lineTo(KOLBEN_WIDTH2 / 2.0, -KOLBEN_HOCH + 5 * K_RING_DIST);
+					kolben.lineTo(KOLBEN_WIDTH2 / 2.0, -KOLBEN_HOCH + 6 * K_RING_DIST);
+					kolben.lineTo(KOLBEN_WIDTH1 / 2.0, -KOLBEN_HOCH + 6 * K_RING_DIST);
+					kolben.lineTo(KOLBEN_WIDTH1 / 2.0, -KOLBEN_HOCH + 7 * K_RING_DIST);
+					kolben.lineTo(KOLBEN_WIDTH2 / 2.0, -KOLBEN_HOCH + 7 * K_RING_DIST);
+					kolben.lineTo(KOLBEN_WIDTH2 / 2.0, KOLBEN_OVER);
+					kolben.lineTo(-KOLBEN_WIDTH2 / 2.0, KOLBEN_OVER);
+					kolben.lineTo(-KOLBEN_WIDTH2 / 2.0, -KOLBEN_HOCH + 7 * K_RING_DIST);
+					kolben.lineTo(-KOLBEN_WIDTH1 / 2.0, -KOLBEN_HOCH + 7 * K_RING_DIST);
+					kolben.lineTo(-KOLBEN_WIDTH1 / 2.0, -KOLBEN_HOCH + 6 * K_RING_DIST);
+					kolben.lineTo(-KOLBEN_WIDTH2 / 2.0, -KOLBEN_HOCH + 6 * K_RING_DIST);
+					kolben.lineTo(-KOLBEN_WIDTH2 / 2.0, -KOLBEN_HOCH + 5 * K_RING_DIST);
+					kolben.lineTo(-KOLBEN_WIDTH1 / 2.0, -KOLBEN_HOCH + 5 * K_RING_DIST);
+					kolben.lineTo(-KOLBEN_WIDTH1 / 2.0, -KOLBEN_HOCH + 4 * K_RING_DIST);
+					kolben.lineTo(-KOLBEN_WIDTH2 / 2.0, -KOLBEN_HOCH + 4 * K_RING_DIST);
+					kolben.lineTo(-KOLBEN_WIDTH2 / 2.0, -KOLBEN_HOCH + 3 * K_RING_DIST);
+					kolben.lineTo(-KOLBEN_WIDTH1 / 2.0, -KOLBEN_HOCH + 3 * K_RING_DIST);
+					kolben.lineTo(-KOLBEN_WIDTH1 / 2.0, -KOLBEN_HOCH + 2 * K_RING_DIST);
+					kolben.lineTo(-KOLBEN_WIDTH2 / 2.0, -KOLBEN_HOCH + 2 * K_RING_DIST);
+					kolben.lineTo(-KOLBEN_WIDTH2 / 2.0, -KOLBEN_HOCH);
+					kolben.closePath();
+
+					scheibe = surface.createGroup();
+					scheibe_basis = scheibe.createPath()
+						.setFill("#ffff55")
+						.setStroke({color: "#000044", width: 2});
+					scheibe_basis.moveTo(0, 0);
+					scheibe_basis.lineTo(-SCHEIBE_RAD * Math.cos(Math.PI * SCHEIBE_OFFENW / 180.0),
+						-SCHEIBE_RAD * Math.sin(Math.PI * SCHEIBE_OFFENW / 180.0));
+					scheibe_basis.arcTo(SCHEIBE_RAD, SCHEIBE_RAD, 0, true, true,
+						SCHEIBE_RAD * Math.cos(Math.PI * SCHEIBE_OFFENW / 180.0),
+						-SCHEIBE_RAD * Math.sin(Math.PI * SCHEIBE_OFFENW / 180.0));
+					scheibe_basis.lineTo(0, 0);
+					scheibe_basis.closePath();
+				
+					pleuel = scheibe.createPath()
+						.setFill("#0000ff")
+						.setStroke({color: "#222222", width: 2});
+				
+					pleuel.moveTo(-PLEUEL_BREITE / 2.0, PLEUEL_LANG_KURZ);
+					pleuel.lineTo(-PLEUEL_BREITE / 2.0, -PLEUEL_LANG_LANG);
+					pleuel.arcTo(PLEUEL_BREITE / 2.0, PLEUEL_BREITE / 2.0 / 2.0, 0, true, true,
+						PLEUEL_BREITE / 2.0, -PLEUEL_LANG_LANG);
+					pleuel.lineTo( PLEUEL_BREITE / 2.0, PLEUEL_LANG_KURZ);
+					pleuel.arcTo(PLEUEL_BREITE / 2.0, PLEUEL_BREITE / 2.0 / 2.0, 0, true, true,
+						-PLEUEL_BREITE / 2.0, PLEUEL_LANG_KURZ);
+					pleuel.closePath();
+
+					stange = surface.createGroup();
+					stange_base = stange.createPath()
+						.setFill("#00ff00")
+						.setStroke({color: "#222222", width: 2});
+				
+					stange_base.moveTo(-STANGE_BREIT / 2.0, -STANGE_OVER);
+					stange_base.lineTo(-STANGE_BREIT / 2.0, STANGE_LANG + STANGE_OVER);
+					stange_base.arcTo(STANGE_BREIT / 2.0, STANGE_BREIT / 2.0 / 2.0, 0, true, false,
+						STANGE_BREIT / 2.0, STANGE_LANG + STANGE_OVER);
+					stange_base.lineTo( STANGE_BREIT / 2.0, -STANGE_OVER);
+					stange_base.arcTo(STANGE_BREIT / 2.0, STANGE_BREIT / 2.0 / 2.0, 0, true, false,
+						-STANGE_BREIT / 2.0, -STANGE_OVER);
+					stange_base.closePath();
+				
+					splint1 = stange.createCircle({cx: 0, cy: STANGE_LANG, r:SPLINT_RAD})
+						.setFill("red")
+						.setStroke({color: "blue", width: 1});
+					splint2 = stange.createCircle({cx: 0, cy: 0, r:SPLINT_RAD})
+						.setFill("red")
+						.setStroke({color: "blue", width: 1});
+
+					trans1 = dojox.gfx.matrix.translate(SCHEIBE_MITTX, SCHEIBE_MITTY);
+					setTimeout("bewege();", 100);
+				}
+
+				erzeugeElemente();
+
+				var slider = new HorizontalSlider({
+					name: "slider",
+					value: 3,
+					minimum: -10,
+					maximum: 10,
+					discreteValues: 21,
+					intermediateChanges: true,
+					style: "width:300px;",
+					onChange: changeSpeed
+				}, "slider");
+
+				var hLabels = new HorizontalRuleLabels({
+					container: "bottomDecoration",
+					style: "width:260px;margin-left:20px;height:2em;font-size:75%;color:gray;"
+				}, "SliderLabels");
+			}
+		);
+	</script>
+</head>
+<body class="soria">
+	<h1>Engine</h1>
+	<hr>
+	<div id="zeichenflaeche">
+		<table class="dijit dijitReset dijitSlider dijitSliderH" cellspacing="0" cellpadding="0" border="0" rules="none" data-dojo-attach-event="onkeydown:_onKeyDown, onkeyup:_onKeyUp" role="presentation" id="slider" widgetid="slider" style="width: 300px;"><tbody><tr class="dijitReset"><td class="dijitReset" colspan="2"></td><td data-dojo-attach-point="topDecoration" class="dijitReset dijitSliderDecoration dijitSliderDecorationT dijitSliderDecorationH"></td><td class="dijitReset" colspan="2"></td></tr><tr class="dijitReset"><td class="dijitReset dijitSliderButtonContainer dijitSliderButtonContainerH"><div class="dijitSliderDecrementIconH" style="" data-dojo-attach-point="decrementButton"><span class="dijitSliderButtonInner">-</span></div></td><td class="dijitReset"><div class="dijitSliderBar dijitSliderBumper dijitSliderBumperH dijitSliderLeftBumper" data-dojo-attach-event="press:_onClkDecBumper"></div></td><td class="dijitReset"><input data-dojo-attach-point="valueNode" type="hidden" name="slider" value="3"><div class="dijitReset dijitSliderBarContainerH" role="presentation" data-dojo-attach-point="sliderBarContainer"><div role="presentation" data-dojo-attach-point="progressBar" class="dijitSliderBar dijitSliderBarH dijitSliderProgressBar dijitSliderProgressBarH" data-dojo-attach-event="press:_onBarClick" style="width: 65%;"><div class="dijitSliderMoveable dijitSliderMoveableH"><div data-dojo-attach-point="sliderHandle,focusNode" class="dijitSliderImageHandle dijitSliderImageHandleH" data-dojo-attach-event="press:_onHandleClick" role="slider" aria-valuemin="-10" aria-valuemax="10" tabindex="0" aria-valuenow="3"></div></div></div><div role="presentation" data-dojo-attach-point="remainingBar" class="dijitSliderBar dijitSliderBarH dijitSliderRemainingBar dijitSliderRemainingBarH" data-dojo-attach-event="press:_onBarClick" style="width: 35%;"></div></div></td><td class="dijitReset"><div class="dijitSliderBar dijitSliderBumper dijitSliderBumperH dijitSliderRightBumper" data-dojo-attach-event="press:_onClkIncBumper"></div></td><td class="dijitReset dijitSliderButtonContainer dijitSliderButtonContainerH"><div class="dijitSliderIncrementIconH" style="" data-dojo-attach-point="incrementButton"><span class="dijitSliderButtonInner">+</span></div></td></tr><tr class="dijitReset"><td class="dijitReset" colspan="2"></td><td data-dojo-attach-point="containerNode,bottomDecoration" class="dijitReset dijitSliderDecoration dijitSliderDecorationB dijitSliderDecorationH"></td><td class="dijitReset" colspan="2"></td></tr></tbody></table>
+		<div class="dijitRuleContainer dijitRuleContainerH dijitRuleLabelsContainer dijitRuleLabelsContainerH" id="SliderLabels" widgetid="SliderLabels" style="width: 260px; margin-left: 20px; height: 2em; font-size: 75%; color: gray;"><div class="dijitRuleLabelContainer dijitRuleLabelContainerH" style="left:0%;"><div class="dijitRuleLabel dijitRuleLabelH">-10</div></div><div class="dijitRuleLabelContainer dijitRuleLabelContainerH" style="left:50%;"><div class="dijitRuleLabel dijitRuleLabelH">0</div></div><div class="dijitRuleLabelContainer dijitRuleLabelContainerH" style="left:100%;"><div class="dijitRuleLabel dijitRuleLabelH">10</div></div></div>
+	<svg overflow="hidden" width="300" height="500"><defs></defs><path fill="rgb(136, 102, 34)" fill-opacity="1" stroke="rgb(170, 0, 0)" stroke-opacity="1" stroke-width="2" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" path="" fill-rule="evenodd" stroke-dasharray="none" dojoGfxStrokeStyle="solid" d="M-15-70L 15-70L 15-60L 10-60L 10-55L 15-55L 15-50L 10-50L 10-45L 15-45L 15-40L 10-40L 10-35L 15-35L 15 7L-15 7L-15-35L-10-35L-10-40L-15-40L-15-45L-10-45L-10-50L-15-50L-15-55L-10-55L-10-60L-15-60L-15-70Z" transform="matrix(1.00000000,0.00000000,0.00000000,1.00000000,150.00000000,213.97522461)"></path><g transform="matrix(-0.45399050,-0.89100652,0.89100652,-0.45399050,150.00000000,320.00000000)"><path fill="rgb(255, 255, 85)" fill-opacity="1" stroke="rgb(0, 0, 68)" stroke-opacity="1" stroke-width="2" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" path="" fill-rule="evenodd" stroke-dasharray="none" dojoGfxStrokeStyle="solid" d="M 0 0L 51.9615-30.0000A 60 60 0 1 1-51.9615-30.0000L 0 0Z"></path><path fill="rgb(0, 0, 255)" fill-opacity="1" stroke="rgb(34, 34, 34)" stroke-opacity="1" stroke-width="2" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" path="" fill-rule="evenodd" stroke-dasharray="none" dojoGfxStrokeStyle="solid" d="M-7.5 48L-7.5-90A 7.5 3.75 0 1 1 7.5-90L 7.5 48A 7.5 3.75 0 1 1-7.5 48Z"></path></g><g transform="matrix(0.89248754,0.45107205,-0.45107205,0.89248754,150.00000000,213.97522461)"><path fill="rgb(0, 255, 0)" fill-opacity="1" stroke="rgb(34, 34, 34)" stroke-opacity="1" stroke-width="2" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" path="" fill-rule="evenodd" stroke-dasharray="none" dojoGfxStrokeStyle="solid" d="M-7.5-9.6L-7.5 169.6A 7.5 3.75 0 1 0 7.5 169.6L 7.5-9.6A 7.5 3.75 0 1 0-7.5-9.6Z"></path><circle fill="rgb(255, 0, 0)" fill-opacity="1" stroke="rgb(0, 0, 255)" stroke-opacity="1" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" cx="0" cy="160" r="4" fill-rule="evenodd" stroke-dasharray="none" dojoGfxStrokeStyle="solid"></circle><circle fill="rgb(255, 0, 0)" fill-opacity="1" stroke="rgb(0, 0, 255)" stroke-opacity="1" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="4" cx="0" cy="0" r="4" fill-rule="evenodd" stroke-dasharray="none" dojoGfxStrokeStyle="solid"></circle></g></svg></div>
+
+</body></html>
