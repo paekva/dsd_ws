@@ -39,6 +39,7 @@ class WebSocketServer(wsserver.dispatcher):
         self.create_socket(socket.AF_INET, socket.SOCK_STREAM)
         self.set_reuse_addr()
         self.bind(addr)
+        print(addr)
         self.listen(5)
         self.type = "Server"
 

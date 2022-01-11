@@ -25,9 +25,40 @@
 
 			function (dom, HorizontalSlider, HorizontalRuleLabels, gfx) {
 				var SPEED_FAC = 0.8;
-				changeSpeed = function (newspeed) {
-					speed = newspeed * SPEED_FAC;
+
+				try {
+					var host = "ws://localhost:6000/";
+
+					//Open up a WebSocket connection named s 
+					const s = new WebSocket(host);
+
+					s.onopen = function (e) {
+						console.log('socket is opened');
+					};
+
+					s.onclose = function (e) {
+						console.log('socket is closed');
+					};
+
+					s.onmessage = function (e) {
+						const newMessage = document.createElement('div');
+						newMessage.innerText = e['data'];
+						output.append(newMessage)
+					};
+
+					s.onerror = function (e) {
+						console.log("Socket error:", e);
+					};
+
+					changeSpeed = function (newspeed) {
+						speed = newspeed * SPEED_FAC;
+						s.send(speed);
+					}
+				} catch {
+					console.error('here');
 				}
+				
+
 
 				var slider = new HorizontalSlider({
 					name: "slider",
