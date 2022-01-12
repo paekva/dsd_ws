@@ -20,18 +20,41 @@ template.innerHTML = `
 </div>
 `;
 
+const defaultData = {
+    title: "Placeholder", 
+    description: "No description is provided", 
+    price: "0 ", 
+    image: "./placeholder.png",
+};
+
 class Product extends HTMLElement {
+    elementData = defaultData;
+
     constructor() {
         super();
     
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.appendChild(template.content.cloneNode(true));
 
-        this.shadowRoot.querySelectorAll("img")[0].src = "./placeholder.png";
-        this.shadowRoot.querySelectorAll(".title")[0].innerHTML = "Placeholder";
-        this.shadowRoot.querySelectorAll(".price > span")[0].innerHTML = "0 ";
+        this.setElementData(this.elementData);
     }
 
+    static get observedAttributes() {
+        return ['image', 'title', 'price', 'description'];
+    }
+
+    attributeChangedCallback(name, oldValue, newValue) { 
+        this.setElementData({...this.elementData, [name]: newValue});
+    }
+
+    setElementData(data) {
+        this.elementData = data;
+        
+        this.shadowRoot.querySelectorAll("img")[0].src = data['image'];
+        this.shadowRoot.querySelectorAll(".title")[0].innerHTML = data['title'];
+        this.shadowRoot.querySelectorAll(".description")[0].innerHTML = data['description'];
+        this.shadowRoot.querySelectorAll(".price > span")[0].innerHTML = data['price'];
+    }
 }
 
 
