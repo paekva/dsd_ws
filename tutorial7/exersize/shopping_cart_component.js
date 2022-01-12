@@ -42,15 +42,13 @@ class ShoppingCart extends HTMLElement {
         this.updateData(this);
     }
 
-
-    get url() {
-        return this.hasAttribute('url') ? this.getAttribute('url') : "/";
+    static get observedAttributes() {
+        return ['url'];
     }
 
-    set url(url) {
-        this.setAttribute('url', url);
+    attributeChangedCallback(name, oldValue, newValue) { 
+        this.updateData(this);
     }
-
 
     onAddItem = (th, ev) => {
         ev.stopImmediatePropagation();
@@ -59,9 +57,13 @@ class ShoppingCart extends HTMLElement {
         const form = ev.target;
 
         const xhttp = new XMLHttpRequest();
-        xhttp.open("POST", th.url + "/cart", true);
-        xhttp.setRequestHeader("Content-Type", "application/json");
-        xhttp.send(JSON.stringify({name: form[0].value, amount: form[1].value}));
+
+        const url = th.getAttribute('url');
+        if(url) {
+            xhttp.open("POST", url + "/cart", true);
+            xhttp.setRequestHeader("Content-Type", "application/json");
+            xhttp.send(JSON.stringify({name: form[0].value, amount: form[1].value}));
+        }
 
         this.updateData(this);
     }
@@ -81,14 +83,22 @@ class ShoppingCart extends HTMLElement {
             }
         };
 
-        xhttp.open("GET", th.url + "/cart", true);
-        xhttp.send();
+        const url = th.getAttribute('url');
+        if(url) {
+            xhttp.open("GET", url + "/cart", true);
+            xhttp.send();
+        }
     }
 
     deleteAnEntry = (th, id) => {
         const xhttp = new XMLHttpRequest();
-        xhttp.open("DELETE", th.url + "/cart/" + id, true);
-        xhttp.send();
+
+        const url = th.getAttribute('url');
+        if(url) {
+            xhttp.open("DELETE", url + "/cart/" + id, true);
+            xhttp.send();
+        }
+        
         th.updateData(th);
     }
 
