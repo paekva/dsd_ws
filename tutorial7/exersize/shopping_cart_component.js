@@ -50,6 +50,7 @@ class ShoppingCart extends HTMLElement {
 
         const xhttp = new XMLHttpRequest();
         xhttp.open("POST", "/cart", true);
+        xhttp.setRequestHeader("Content-Type", "application/json");
         xhttp.send(JSON.stringify({name: form[0].value, amount: form[1].value}));
 
         this.updateData(this);
@@ -65,7 +66,7 @@ class ShoppingCart extends HTMLElement {
                 root.innerHTML = "";
 
                 cartData.forEach(element => {
-                    root.appendChild(th.createNewElement(element));
+                    root.appendChild(th.createNewElement(th, element));
                 });
             }
         };
@@ -74,7 +75,7 @@ class ShoppingCart extends HTMLElement {
         xhttp.send();
     }
 
-    createNewElement = (element) => {
+    createNewElement = (th, element) => {
         const newEntry = document.createElement("li");
 
         const name = document.createElement("b");
@@ -85,13 +86,20 @@ class ShoppingCart extends HTMLElement {
 
         const deleteBtn = document.createElement("button");
         deleteBtn.innerText = 'delete';
-        deleteBtn.addEventListener('click', (e) => deleteAnEntry(e, element['id']));
+        deleteBtn.addEventListener('click', (e) => th.deleteAnEntry(e, element['id']));
 
         newEntry.appendChild(amount);
         newEntry.appendChild(name);
         newEntry.appendChild(deleteBtn);
 
         return newEntry;
+    }
+
+    deleteAnEntry = (th, id) => {
+        const xhttp = new XMLHttpRequest();
+        xhttp.open("DELETE", "/cart/" + id, true);
+        xhttp.send();
+        th.updateData(th);
     }
 }
 
