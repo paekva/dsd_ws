@@ -7,9 +7,13 @@
     <title></title>
 </head>
 <body>
-    <form id="form1" runat="server">
-        <div>
-        </div>
+    <form id="form1" runat="server" >
+        <asp:TextBox ID="Name" runat="server" />
+        <asp:Button runat="server" onclick="HandleNewName" Text="Send data" />
+        <hr />
+        <asp:Label runat="server" id="LastName" />
+        <hr />
+        <asp:BulletedList  runat="server" id="NameList" ></asp:BulletedList>
     </form>
 </body>
 </html>
