@@ -12,11 +12,13 @@ namespace SearchApplication.Models
         public List<string> SearchedNameList { get; set; }
         public string SearchValue { get; set; }
 
-        public Names(string filePath) {
+        public Names(string filePath)
+        {
+            NameList = new List<string>();
+
             try
             {
                 if (!File.Exists(filePath)) {
-                    NameList = new List<string>();
                     return;
                 }
 
@@ -29,6 +31,8 @@ namespace SearchApplication.Models
             {
                 Console.WriteLine(e.Message);
             }
+
+            SearchedNameList = NameList;
         }
 
         public void PerformSearch(string search)

@@ -3,6 +3,14 @@
     ViewBag.Title = "Names";
 }
 
-<h2>Search 1S</h2>
+<h1>Person Search</h1>
+
+<hr />
+
+<h3>Found Persons</h3>
 
 <p>@Model.SearchValue</p>
+@foreach (var name in Model.SearchedNameList)
+  {
+    <p>@name</p>
+  } 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -11,13 +12,13 @@ namespace SearchApplication.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Search");
         }
 
         public ActionResult Search(string search)
         {
-            var namesModel = new Names("names.txt");
-            namesModel.PerformSearch(search);
+            var namesModel = new Names("C:\\Users\\Paekva\\names.txt");
+            if(search != null) namesModel.PerformSearch(search);
 
             return View(namesModel);
         }
