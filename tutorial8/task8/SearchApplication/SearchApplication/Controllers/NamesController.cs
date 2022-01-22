@@ -15,12 +15,17 @@ namespace SearchApplication.Controllers
             return RedirectToAction("Search");
         }
 
-        public ActionResult Search(string search)
+        public ActionResult Search(string SearchValue)
         {
             var namesModel = new Names("C:\\Users\\Paekva\\names.txt");
-            if(search != null) namesModel.PerformSearch(search);
+            if(SearchValue != null) namesModel.PerformSearch(SearchValue);
 
             return View(namesModel);
+        }
+
+        public ActionResult ClearSearch()
+        {
+            return RedirectToAction("Search");
         }
     }
 }

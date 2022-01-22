@@ -5,12 +5,26 @@
 
 <h1>Person Search</h1>
 
+<div class="controls">
+    @using (Html.BeginForm("Search", "Names", FormMethod.Get))
+    {
+        @Html.TextBoxFor(m => m.SearchValue)
+        <button type="submit">Search</button>
+    }
+
+    @using (Html.BeginForm("ClearSearch", "Names", FormMethod.Get))
+    {
+        <button type="submit">Clear</button>
+    }
+</div>
+
+
 <hr />
 
 <h3>Found Persons</h3>
 
 <p>@Model.SearchValue</p>
 @foreach (var name in Model.SearchedNameList)
-  {
+{
     <p>@name</p>
-  } 
+} 
