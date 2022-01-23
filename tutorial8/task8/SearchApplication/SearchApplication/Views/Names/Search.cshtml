@@ -5,15 +5,11 @@
 
 <h1>Person Search</h1>
 
-@using (Html.BeginForm("Search", "Names", FormMethod.Get))
+@using (Html.BeginForm())
 {
     @Html.TextBoxFor(m => m.SearchValue)
-    <button type="submit" value="Search">Search</button>
-}
-
-@using (Html.BeginForm("ClearSearch", "Names", FormMethod.Get))
-{
-    <button type="submit">Clear</button>
+    <input type="submit" formaction="Search" formmethod="get" value="Search"/>
+    <input type="submit" formaction="Reset" formmethod="get" value="All"/>
 }
 
 <hr />

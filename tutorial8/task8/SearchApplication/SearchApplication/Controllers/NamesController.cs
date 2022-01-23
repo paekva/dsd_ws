@@ -23,7 +23,7 @@ namespace SearchApplication.Controllers
             return View(namesModel);
         }
 
-        public ActionResult ClearSearch()
+        public ActionResult Reset()
         {
             return RedirectToAction("Search");
         }
