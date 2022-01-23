@@ -59,7 +59,7 @@ class ShoppingCart extends HTMLElement {
         const xhttp = new XMLHttpRequest();
 
         const url = th.getAttribute('url');
-        if(url) {
+        if(url != null && url != undefined) {
             xhttp.open("POST", url + "/cart", true);
             xhttp.setRequestHeader("Content-Type", "application/json");
             xhttp.send(JSON.stringify({name: form[0].value, amount: form[1].value}));
@@ -84,7 +84,7 @@ class ShoppingCart extends HTMLElement {
         };
 
         const url = th.getAttribute('url');
-        if(url) {
+        if(url != null && url != undefined) {
             xhttp.open("GET", url + "/cart", true);
             xhttp.send();
         }
@@ -94,7 +94,7 @@ class ShoppingCart extends HTMLElement {
         const xhttp = new XMLHttpRequest();
 
         const url = th.getAttribute('url');
-        if(url) {
+        if(url != null && url != undefined) {
             xhttp.open("DELETE", url + "/cart/" + id, true);
             xhttp.send();
         }
