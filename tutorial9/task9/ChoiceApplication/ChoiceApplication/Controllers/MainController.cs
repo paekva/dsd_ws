@@ -23,8 +23,16 @@ namespace ChoiceApplication.Controllers
 
             var votes = service.stimmen();
             ViewBag.Votes = votes;
+            
+            var colors = new List<string>();
+            for(var c = 0; c < votes.Length; c++)
+            {
+                var color = service.farbevon(c);
+                colors.Add(new string('0', (6 - color.Length)) + color);
+            }
+            ViewBag.Colors = colors;
 
-            ViewBag.ErrorMsg = result == false ? "Try again to vote, please" : "";
+            ViewBag.ErrorMsg = result == false ? "Try again, please" : "";
 
             return View();
         }
@@ -34,6 +42,14 @@ namespace ChoiceApplication.Controllers
             var service = new Service1SoapClient("Service1Soap");
 
             var result = service.waehle(candidateNumber);
+            return RedirectToAction("Image", "Main", new { result });
+        }
+
+        public ActionResult Reset()
+        {
+            var service = new Service1SoapClient("Service1Soap");
+
+            var result = service.reset();
             return RedirectToAction("Image", "Main", new { result });
         }
     }

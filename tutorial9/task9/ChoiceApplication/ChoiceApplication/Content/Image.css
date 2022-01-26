@@ -1,0 +1,18 @@
+﻿p {
+    margin: 0;
+    padding: 0;
+}
+
+.result, .buttons {
+    display: flex;
+    flex-direction: row;
+}
+
+.colorItem {
+    width: 20px;
+    height: 20px;
+}
+
+.buttons > * {
+    margin: 0 3px;
+}

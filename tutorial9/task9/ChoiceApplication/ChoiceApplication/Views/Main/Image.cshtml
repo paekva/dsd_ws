@@ -1,24 +1,36 @@
 ﻿
 @{
     ViewBag.Title = "Die Wahl";
+    var prefix = "X";
 }
-
+<link href="@Url.Content("~/Content/Image.css")" rel="stylesheet" type="text/css" />
 <h2>Die Wahl</h2>
 <hr />
 
 <img src="data:image/png;base64,@ViewBag.Image" />
-@using (Html.BeginForm("MakeChoice", "Main", FormMethod.Get))
+@using (Html.BeginForm())
 {
     for (int i = 1; i < 7; i++)
     {
         <input type="radio" id=@i name="candidateNumber" value=@i />
-        <label for=@i >X @i</label>
+        <label for=@i>@prefix@i</label>
     }
-    <button type="submit">make choice</button>
+    <div class="buttons">
+        <button type="submit" formaction="MakeChoice" formmethod="get" value="candidateNumber">make choice</button>
+        <button type="submit" formaction="Reset" formmethod="get" >reset</button>
+    </div>
     <p>@ViewBag.ErrorMsg</p>
 }
 
-@for (int i = 1; i < 7; i++)
-            {
-                <p>@ViewBag.Votes[i-1]</p>
-            }
+<div class="result">
+    @for (int i = 1; i < 7; i++)
+    {
+        <div style="margin: 1px">
+            <p class="colorItem" style="background: #@ViewBag.Colors[i - 1];"></p>
+            <p>@prefix@i</p>
+            <p>@ViewBag.Votes[i - 1]</p>
+        </div>
+
+    }
+</div>
+

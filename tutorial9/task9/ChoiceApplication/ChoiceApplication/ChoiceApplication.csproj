@@ -100,7 +100,7 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <Content Include="Content\Site.css" />
+    <Content Include="Content\Image.css" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
     <None Include="Connected Services\ChoiceService\votum.wsdl" />
