@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="Plus">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="op1" type="s:double" />
+            <s:element minOccurs="1" maxOccurs="1" name="op2" type="s:double" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PlusResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="PlusResult" type="s:double" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Minus">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="op1" type="s:double" />
+            <s:element minOccurs="1" maxOccurs="1" name="op2" type="s:double" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="MinusResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="MinusResult" type="s:double" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PlusMinus">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="op1" type="s:double" />
+            <s:element minOccurs="1" maxOccurs="1" name="op2" type="s:double" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PlusMinusResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PlusMinusResult" type="tns:PlusMinusResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="PlusMinusResult">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="plusResult" type="s:double" />
+          <s:element minOccurs="1" maxOccurs="1" name="minusResult" type="s:double" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="compute_ggt">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="op1" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="op2" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="compute_ggtResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="compute_ggtResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="double" type="s:double" />
+      <s:element name="PlusMinusResult" nillable="true" type="tns:PlusMinusResult" />
+      <s:element name="int" type="s:int" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="PlusSoapIn">
+    <wsdl:part name="parameters" element="tns:Plus" />
+  </wsdl:message>
+  <wsdl:message name="PlusSoapOut">
+    <wsdl:part name="parameters" element="tns:PlusResponse" />
+  </wsdl:message>
+  <wsdl:message name="MinusSoapIn">
+    <wsdl:part name="parameters" element="tns:Minus" />
+  </wsdl:message>
+  <wsdl:message name="MinusSoapOut">
+    <wsdl:part name="parameters" element="tns:MinusResponse" />
+  </wsdl:message>
+  <wsdl:message name="PlusMinusSoapIn">
+    <wsdl:part name="parameters" element="tns:PlusMinus" />
+  </wsdl:message>
+  <wsdl:message name="PlusMinusSoapOut">
+    <wsdl:part name="parameters" element="tns:PlusMinusResponse" />
+  </wsdl:message>
+  <wsdl:message name="compute_ggtSoapIn">
+    <wsdl:part name="parameters" element="tns:compute_ggt" />
+  </wsdl:message>
+  <wsdl:message name="compute_ggtSoapOut">
+    <wsdl:part name="parameters" element="tns:compute_ggtResponse" />
+  </wsdl:message>
+  <wsdl:message name="PlusHttpGetIn">
+    <wsdl:part name="op1" type="s:string" />
+    <wsdl:part name="op2" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="PlusHttpGetOut">
+    <wsdl:part name="Body" element="tns:double" />
+  </wsdl:message>
+  <wsdl:message name="MinusHttpGetIn">
+    <wsdl:part name="op1" type="s:string" />
+    <wsdl:part name="op2" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="MinusHttpGetOut">
+    <wsdl:part name="Body" element="tns:double" />
+  </wsdl:message>
+  <wsdl:message name="PlusMinusHttpGetIn">
+    <wsdl:part name="op1" type="s:string" />
+    <wsdl:part name="op2" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="PlusMinusHttpGetOut">
+    <wsdl:part name="Body" element="tns:PlusMinusResult" />
+  </wsdl:message>
+  <wsdl:message name="compute_ggtHttpGetIn">
+    <wsdl:part name="op1" type="s:string" />
+    <wsdl:part name="op2" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="compute_ggtHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="PlusHttpPostIn">
+    <wsdl:part name="op1" type="s:string" />
+    <wsdl:part name="op2" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="PlusHttpPostOut">
+    <wsdl:part name="Body" element="tns:double" />
+  </wsdl:message>
+  <wsdl:message name="MinusHttpPostIn">
+    <wsdl:part name="op1" type="s:string" />
+    <wsdl:part name="op2" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="MinusHttpPostOut">
+    <wsdl:part name="Body" element="tns:double" />
+  </wsdl:message>
+  <wsdl:message name="PlusMinusHttpPostIn">
+    <wsdl:part name="op1" type="s:string" />
+    <wsdl:part name="op2" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="PlusMinusHttpPostOut">
+    <wsdl:part name="Body" element="tns:PlusMinusResult" />
+  </wsdl:message>
+  <wsdl:message name="compute_ggtHttpPostIn">
+    <wsdl:part name="op1" type="s:string" />
+    <wsdl:part name="op2" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="compute_ggtHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:portType name="PlusMinusServiceSoap">
+    <wsdl:operation name="Plus">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Addiert op1 und op2</wsdl:documentation>
+      <wsdl:input message="tns:PlusSoapIn" />
+      <wsdl:output message="tns:PlusSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Minus">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Bildet die Differenz von op1 und op2</wsdl:documentation>
+      <wsdl:input message="tns:MinusSoapIn" />
+      <wsdl:output message="tns:MinusSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PlusMinus">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Plus und Minus</wsdl:documentation>
+      <wsdl:input message="tns:PlusMinusSoapIn" />
+      <wsdl:output message="tns:PlusMinusSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="compute_ggt">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">GGT von op1 und op2</wsdl:documentation>
+      <wsdl:input message="tns:compute_ggtSoapIn" />
+      <wsdl:output message="tns:compute_ggtSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="PlusMinusServiceHttpGet">
+    <wsdl:operation name="Plus">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Addiert op1 und op2</wsdl:documentation>
+      <wsdl:input message="tns:PlusHttpGetIn" />
+      <wsdl:output message="tns:PlusHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Minus">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Bildet die Differenz von op1 und op2</wsdl:documentation>
+      <wsdl:input message="tns:MinusHttpGetIn" />
+      <wsdl:output message="tns:MinusHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PlusMinus">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Plus und Minus</wsdl:documentation>
+      <wsdl:input message="tns:PlusMinusHttpGetIn" />
+      <wsdl:output message="tns:PlusMinusHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="compute_ggt">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">GGT von op1 und op2</wsdl:documentation>
+      <wsdl:input message="tns:compute_ggtHttpGetIn" />
+      <wsdl:output message="tns:compute_ggtHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="PlusMinusServiceHttpPost">
+    <wsdl:operation name="Plus">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Addiert op1 und op2</wsdl:documentation>
+      <wsdl:input message="tns:PlusHttpPostIn" />
+      <wsdl:output message="tns:PlusHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Minus">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Bildet die Differenz von op1 und op2</wsdl:documentation>
+      <wsdl:input message="tns:MinusHttpPostIn" />
+      <wsdl:output message="tns:MinusHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PlusMinus">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Plus und Minus</wsdl:documentation>
+      <wsdl:input message="tns:PlusMinusHttpPostIn" />
+      <wsdl:output message="tns:PlusMinusHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="compute_ggt">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">GGT von op1 und op2</wsdl:documentation>
+      <wsdl:input message="tns:compute_ggtHttpPostIn" />
+      <wsdl:output message="tns:compute_ggtHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PlusMinusServiceSoap" type="tns:PlusMinusServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Plus">
+      <soap:operation soapAction="http://tempuri.org/Plus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Minus">
+      <soap:operation soapAction="http://tempuri.org/Minus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PlusMinus">
+      <soap:operation soapAction="http://tempuri.org/PlusMinus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="compute_ggt">
+      <soap:operation soapAction="http://tempuri.org/compute_ggt" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="PlusMinusServiceSoap12" type="tns:PlusMinusServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Plus">
+      <soap12:operation soapAction="http://tempuri.org/Plus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Minus">
+      <soap12:operation soapAction="http://tempuri.org/Minus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PlusMinus">
+      <soap12:operation soapAction="http://tempuri.org/PlusMinus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="compute_ggt">
+      <soap12:operation soapAction="http://tempuri.org/compute_ggt" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="PlusMinusServiceHttpGet" type="tns:PlusMinusServiceHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="Plus">
+      <http:operation location="/Plus" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Minus">
+      <http:operation location="/Minus" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PlusMinus">
+      <http:operation location="/PlusMinus" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="compute_ggt">
+      <http:operation location="/compute_ggt" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="PlusMinusServiceHttpPost" type="tns:PlusMinusServiceHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="Plus">
+      <http:operation location="/Plus" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Minus">
+      <http:operation location="/Minus" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PlusMinus">
+      <http:operation location="/PlusMinus" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="compute_ggt">
+      <http:operation location="/compute_ggt" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PlusMinusService">
+    <wsdl:port name="PlusMinusServiceSoap" binding="tns:PlusMinusServiceSoap">
+      <soap:address location="http://vsr-demo.informatik.tu-chemnitz.de/WebServices/PlusMinusService/PlusMinusService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="PlusMinusServiceSoap12" binding="tns:PlusMinusServiceSoap12">
+      <soap12:address location="http://vsr-demo.informatik.tu-chemnitz.de/WebServices/PlusMinusService/PlusMinusService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="PlusMinusServiceHttpGet" binding="tns:PlusMinusServiceHttpGet">
+      <http:address location="http://vsr-demo.informatik.tu-chemnitz.de/WebServices/PlusMinusService/PlusMinusService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="PlusMinusServiceHttpPost" binding="tns:PlusMinusServiceHttpPost">
+      <http:address location="http://vsr-demo.informatik.tu-chemnitz.de/WebServices/PlusMinusService/PlusMinusService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

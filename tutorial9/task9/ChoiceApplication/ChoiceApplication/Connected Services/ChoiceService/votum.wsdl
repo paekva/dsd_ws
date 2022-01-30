@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="waehle">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="i" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="waehleResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="waehleResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="erzeuge_bild">
+        <s:complexType />
+      </s:element>
+      <s:element name="erzeuge_bildResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="erzeuge_bildResult" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="stimmen">
+        <s:complexType />
+      </s:element>
+      <s:element name="stimmenResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="stimmenResult" type="tns:ArrayOfInt" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfInt">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="int" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="farbevon">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="i" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="farbevonResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="farbevonResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="reset">
+        <s:complexType />
+      </s:element>
+      <s:element name="resetResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="resetResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="boolean" type="s:boolean" />
+      <s:element name="base64Binary" nillable="true" type="s:base64Binary" />
+      <s:element name="ArrayOfInt" nillable="true" type="tns:ArrayOfInt" />
+      <s:element name="string" nillable="true" type="s:string" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="waehleSoapIn">
+    <wsdl:part name="parameters" element="tns:waehle" />
+  </wsdl:message>
+  <wsdl:message name="waehleSoapOut">
+    <wsdl:part name="parameters" element="tns:waehleResponse" />
+  </wsdl:message>
+  <wsdl:message name="erzeuge_bildSoapIn">
+    <wsdl:part name="parameters" element="tns:erzeuge_bild" />
+  </wsdl:message>
+  <wsdl:message name="erzeuge_bildSoapOut">
+    <wsdl:part name="parameters" element="tns:erzeuge_bildResponse" />
+  </wsdl:message>
+  <wsdl:message name="stimmenSoapIn">
+    <wsdl:part name="parameters" element="tns:stimmen" />
+  </wsdl:message>
+  <wsdl:message name="stimmenSoapOut">
+    <wsdl:part name="parameters" element="tns:stimmenResponse" />
+  </wsdl:message>
+  <wsdl:message name="farbevonSoapIn">
+    <wsdl:part name="parameters" element="tns:farbevon" />
+  </wsdl:message>
+  <wsdl:message name="farbevonSoapOut">
+    <wsdl:part name="parameters" element="tns:farbevonResponse" />
+  </wsdl:message>
+  <wsdl:message name="resetSoapIn">
+    <wsdl:part name="parameters" element="tns:reset" />
+  </wsdl:message>
+  <wsdl:message name="resetSoapOut">
+    <wsdl:part name="parameters" element="tns:resetResponse" />
+  </wsdl:message>
+  <wsdl:message name="waehleHttpGetIn">
+    <wsdl:part name="i" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="waehleHttpGetOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="erzeuge_bildHttpGetIn" />
+  <wsdl:message name="erzeuge_bildHttpGetOut">
+    <wsdl:part name="Body" element="tns:base64Binary" />
+  </wsdl:message>
+  <wsdl:message name="stimmenHttpGetIn" />
+  <wsdl:message name="stimmenHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfInt" />
+  </wsdl:message>
+  <wsdl:message name="farbevonHttpGetIn">
+    <wsdl:part name="i" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="farbevonHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="resetHttpGetIn" />
+  <wsdl:message name="resetHttpGetOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="waehleHttpPostIn">
+    <wsdl:part name="i" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="waehleHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:message name="erzeuge_bildHttpPostIn" />
+  <wsdl:message name="erzeuge_bildHttpPostOut">
+    <wsdl:part name="Body" element="tns:base64Binary" />
+  </wsdl:message>
+  <wsdl:message name="stimmenHttpPostIn" />
+  <wsdl:message name="stimmenHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfInt" />
+  </wsdl:message>
+  <wsdl:message name="farbevonHttpPostIn">
+    <wsdl:part name="i" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="farbevonHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="resetHttpPostIn" />
+  <wsdl:message name="resetHttpPostOut">
+    <wsdl:part name="Body" element="tns:boolean" />
+  </wsdl:message>
+  <wsdl:portType name="Service1Soap">
+    <wsdl:operation name="waehle">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Votum fuer Partei i (0..5)</wsdl:documentation>
+      <wsdl:input message="tns:waehleSoapIn" />
+      <wsdl:output message="tns:waehleSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="erzeuge_bild">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gibt Wahlergebnis als Tortendiagramm (jpeg) heraus</wsdl:documentation>
+      <wsdl:input message="tns:erzeuge_bildSoapIn" />
+      <wsdl:output message="tns:erzeuge_bildSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="stimmen">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gibt Wahlergebnis als Feld zurueck</wsdl:documentation>
+      <wsdl:input message="tns:stimmenSoapIn" />
+      <wsdl:output message="tns:stimmenSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="farbevon">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gibt die Farbe der Partei i (0..5) zurueck</wsdl:documentation>
+      <wsdl:input message="tns:farbevonSoapIn" />
+      <wsdl:output message="tns:farbevonSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="reset">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Setzt die Anzahl der Stimmen auf jeweis 1 zurueck</wsdl:documentation>
+      <wsdl:input message="tns:resetSoapIn" />
+      <wsdl:output message="tns:resetSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="Service1HttpGet">
+    <wsdl:operation name="waehle">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Votum fuer Partei i (0..5)</wsdl:documentation>
+      <wsdl:input message="tns:waehleHttpGetIn" />
+      <wsdl:output message="tns:waehleHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="erzeuge_bild">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gibt Wahlergebnis als Tortendiagramm (jpeg) heraus</wsdl:documentation>
+      <wsdl:input message="tns:erzeuge_bildHttpGetIn" />
+      <wsdl:output message="tns:erzeuge_bildHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="stimmen">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gibt Wahlergebnis als Feld zurueck</wsdl:documentation>
+      <wsdl:input message="tns:stimmenHttpGetIn" />
+      <wsdl:output message="tns:stimmenHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="farbevon">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gibt die Farbe der Partei i (0..5) zurueck</wsdl:documentation>
+      <wsdl:input message="tns:farbevonHttpGetIn" />
+      <wsdl:output message="tns:farbevonHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="reset">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Setzt die Anzahl der Stimmen auf jeweis 1 zurueck</wsdl:documentation>
+      <wsdl:input message="tns:resetHttpGetIn" />
+      <wsdl:output message="tns:resetHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="Service1HttpPost">
+    <wsdl:operation name="waehle">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Votum fuer Partei i (0..5)</wsdl:documentation>
+      <wsdl:input message="tns:waehleHttpPostIn" />
+      <wsdl:output message="tns:waehleHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="erzeuge_bild">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gibt Wahlergebnis als Tortendiagramm (jpeg) heraus</wsdl:documentation>
+      <wsdl:input message="tns:erzeuge_bildHttpPostIn" />
+      <wsdl:output message="tns:erzeuge_bildHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="stimmen">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gibt Wahlergebnis als Feld zurueck</wsdl:documentation>
+      <wsdl:input message="tns:stimmenHttpPostIn" />
+      <wsdl:output message="tns:stimmenHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="farbevon">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Gibt die Farbe der Partei i (0..5) zurueck</wsdl:documentation>
+      <wsdl:input message="tns:farbevonHttpPostIn" />
+      <wsdl:output message="tns:farbevonHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="reset">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Setzt die Anzahl der Stimmen auf jeweis 1 zurueck</wsdl:documentation>
+      <wsdl:input message="tns:resetHttpPostIn" />
+      <wsdl:output message="tns:resetHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="Service1Soap" type="tns:Service1Soap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="waehle">
+      <soap:operation soapAction="http://tempuri.org/waehle" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="erzeuge_bild">
+      <soap:operation soapAction="http://tempuri.org/erzeuge_bild" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="stimmen">
+      <soap:operation soapAction="http://tempuri.org/stimmen" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="farbevon">
+      <soap:operation soapAction="http://tempuri.org/farbevon" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="reset">
+      <soap:operation soapAction="http://tempuri.org/reset" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="Service1Soap12" type="tns:Service1Soap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="waehle">
+      <soap12:operation soapAction="http://tempuri.org/waehle" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="erzeuge_bild">
+      <soap12:operation soapAction="http://tempuri.org/erzeuge_bild" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="stimmen">
+      <soap12:operation soapAction="http://tempuri.org/stimmen" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="farbevon">
+      <soap12:operation soapAction="http://tempuri.org/farbevon" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="reset">
+      <soap12:operation soapAction="http://tempuri.org/reset" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="Service1HttpGet" type="tns:Service1HttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="waehle">
+      <http:operation location="/waehle" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="erzeuge_bild">
+      <http:operation location="/erzeuge_bild" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="stimmen">
+      <http:operation location="/stimmen" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="farbevon">
+      <http:operation location="/farbevon" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="reset">
+      <http:operation location="/reset" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="Service1HttpPost" type="tns:Service1HttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="waehle">
+      <http:operation location="/waehle" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="erzeuge_bild">
+      <http:operation location="/erzeuge_bild" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="stimmen">
+      <http:operation location="/stimmen" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="farbevon">
+      <http:operation location="/farbevon" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="reset">
+      <http:operation location="/reset" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Service1">
+    <wsdl:port name="Service1Soap" binding="tns:Service1Soap">
+      <soap:address location="http://vsr-demo.informatik.tu-chemnitz.de/webservices/VotumService/votum.asmx" />
+    </wsdl:port>
+    <wsdl:port name="Service1Soap12" binding="tns:Service1Soap12">
+      <soap12:address location="http://vsr-demo.informatik.tu-chemnitz.de/webservices/VotumService/votum.asmx" />
+    </wsdl:port>
+    <wsdl:port name="Service1HttpGet" binding="tns:Service1HttpGet">
+      <http:address location="http://vsr-demo.informatik.tu-chemnitz.de/webservices/VotumService/votum.asmx" />
+    </wsdl:port>
+    <wsdl:port name="Service1HttpPost" binding="tns:Service1HttpPost">
+      <http:address location="http://vsr-demo.informatik.tu-chemnitz.de/webservices/VotumService/votum.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
