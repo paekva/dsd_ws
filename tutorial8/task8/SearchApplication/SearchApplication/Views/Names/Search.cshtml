@@ -1,0 +1,22 @@
+﻿@model SearchApplication.Models.Names
+@{
+    ViewBag.Title = "Names";
+}
+
+<h1>Person Search</h1>
+
+@using (Html.BeginForm())
+{
+    @Html.TextBoxFor(m => m.SearchValue)
+    <input type="submit" formaction="Search" formmethod="get" value="Search"/>
+    <input type="submit" formaction="Reset" formmethod="get" value="All"/>
+}
+
+<hr />
+
+<h3>Found Persons</h3>
+
+@foreach (var name in Model.SearchedNameList)
+{
+    <p>@name</p>
+} 
